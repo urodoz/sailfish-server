@@ -57,3 +57,20 @@ var server = app.listen(configuration["port"], function () {
   console.log('App listening at http://%s:%s', host, port);
 
 });
+
+/*
+ * Add socket IO (server already defined)
+ */
+var io = require('socket.io')(server);
+
+io.on('connection', function (socket) {
+    socket.on('runner-connected', function (data) {
+
+        //Emit handshade event
+        socket.emit("handshake", {
+            handshake: true,
+            source: "sailfish-ci-server"
+        });
+
+    });
+});
