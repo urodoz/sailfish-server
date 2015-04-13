@@ -22,34 +22,8 @@ var addRepositoryControllerFactory = require("sailfish/controller/add_repository
 var hooksControllerFactory = require("sailfish/controller/hooks");
 var repositoriesControllerFactory = require("sailfish/controller/repositories");
 
-//Models
-mongoose.connect(configuration["mongo"]);
-
-var Runner = mongoose.model('Runner', {
-    name: String,
-    url: String,
-    token: String
-});
-
-var Project = mongoose.model("Project", {
-    name: String,
-    slug: String,
-    repository: String,
-    branches: String,
-    hosts: String
-});
-
-var Build = mongoose.model("Build", {
-    token: String,
-    sequence: Number,
-    commit: String,
-    project: String, //Project name
-    output: String,
-    datetime: { type: Date, default: Date.now },
-    success: Boolean,
-    hosts: String,
-    status: String //created, pulling, provisioning, running, finished
-});
+//Model injection
+require("sailfish/model/model")(app, configuration["mongo"]);
 
 //Static server and Template configuration
 app.use('/static', express.static('public'));
@@ -57,10 +31,6 @@ app.set('views', './views');
 app.set('view engine', 'html');
 app.set("sailfish.configuration", configuration);
 
-//Model injection on application
-app.set("model.Runner", Runner);
-app.set("model.Project", Project);
-app.set("model.Build", Build);
 var sailfishCollector = new collectorClass(app);
 
 app.engine('html', twig.__express);
@@ -69,7 +39,6 @@ app.engine('html', twig.__express);
 var bodyParser = require('body-parser');
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
-
 
 new settingsControllerFactory(app, sailfishCollector);
 new addRunnerControllerFactory(app, sailfishCollector);
