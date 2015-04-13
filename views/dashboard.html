@@ -1,0 +1,25 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+<h3 class="col s12 light center header">Dasboard</h3>
+
+<div class="row">
+    {% for project in projectsInformation %}
+    <div class="col s4 m4 l4">
+        <div class="card grey darken-1">
+            <div class="card-content white-text">
+                <span class="card-title">
+                    <a href="/project/{{project.slug}}">{{project.name}}</a>
+                </span>
+                <p></p>
+            </div>
+            <div class="card-action center-align">
+                <!--<a href="#"><i class="mdi-action-settings"></i> Configure</a>-->
+                <a href="/quick-project-build/{{project.slug}}"><i class="mdi-av-play-arrow"></i> Build</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

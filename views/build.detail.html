@@ -1,0 +1,39 @@
+{% for package, packageOutput in build %}
+<h5 style="font-size:1.34rem;">
+    <i class="fa fa-cube"></i> {{package}}
+</h5>
+
+<!-- TEST results if any -->
+{% if package.xunit is defined %}
+<div class="row build-detail">
+    <div class="row">
+        <div class="col s2 offset-s4">Tests</div>
+        <div class="col s2">Errors</div>
+        <div class="col s2">Failures</div>
+        <div class="col s2">Skip</div>
+    </div>
+    {% for xunitReport in build[package]["xunit"] %}
+        <div class="row">
+            <div class="col s4 xunit-name">{{xunitReport.name}}</div>
+            <div class="col s2 xunit-tests">{{xunitReport.tests}}</div>
+            <div class="col s2 xunit-errors">{{xunitReport.errors}}</div>
+            <div class="col s2 xunit-failures">{{xunitReport.failures}}</div>
+            <div class="col s2 xunit-skip">{{xunitReport.skip}}</div>
+        </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<!-- Build information -->
+<div class="row build-detail"
+        style="background-color:#343434;color:#dfdfdf;font-family: 'Ubuntu Mono'!important;font-size:14px;padding-top:10px;">
+    {% for line in packageOutput.terminal %}
+        <div class="col s1 m1 l1" style="color: #737373;">
+            <span style="float:right">{{line.number}}</span>
+        </div>
+        <div class="col s11 m11 l11">
+            {{line.output}}
+        </div>
+    {% endfor %}
+</div>
+{% endfor %}

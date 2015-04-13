@@ -1,0 +1,33 @@
+.sailfish-sidebar {
+    background-color: #fff;
+    min-height: 900px;
+}
+
+.sailfish-main {
+    background-color: #fefefe;
+}
+
+
+h2.header, h3.header, h4.header {
+    color: #e91e63;
+}
+
+.build-detail {
+    font-family: 'Ubuntu Mono', ;
+}
+
+
+.xunit-name {
+    background-color: #880e4f;
+    color: #fff;
+}
+
+.xunit-tests, .xunit-errors, .xunit-failures, .xunit-skip {
+    background-color: #1de9b6;
+    color: #121212;
+}
+
+.xunit-tests-bad, .xunit-errors-bad, .xunit-failures-bad, .xunit-skip-bad {
+    background-color: #b71c1c;
+    color:#fff;
+}

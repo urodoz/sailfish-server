@@ -1,0 +1,22 @@
+{
+  "name": "sailfish-ci-server",
+  "version": "0.0.1",
+  "authors": [
+    "Albert Lacarta <urodoz@gmail.com>"
+  ],
+  "description": "Continuous integration server",
+  "main": "main.js",
+  "keywords": [
+    "ci",
+    "continuous",
+    "integration",
+    "server"
+  ],
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "underscore": "~1.8.2",
+    "materialize": "~0.95.3",
+    "font-awesome": "~4.3.0"
+  }
+}

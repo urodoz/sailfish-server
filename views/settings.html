@@ -1,0 +1,49 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+<h3 class="col s12 light center header">Settings</h3>
+
+<div class="row">
+
+    <!-- Repositories -->
+    <div class="col s4 m4 l4">
+        <div class="card indigo darken-1">
+            <div class="card-content white-text">
+                <span class="card-title"><i class="fa fa-cubes"></i> Repositories</span>
+                <p></p>
+            </div>
+            <div class="card-action center-align">
+                <a href="/settings/repositories">Configure</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- KEYS -->
+    <div class="col s4 m4 l4">
+        <div class="card indigo darken-1">
+            <div class="card-content white-text">
+                <span class="card-title"><i class="mdi-communication-vpn-key"></i> SSH Keys</span>
+                <p></p>
+            </div>
+            <div class="card-action center-align">
+                <a href="/settings/sshkeys">Configure</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- EMAIL notifications -->
+    <div class="col s4 m4 l4">
+        <div class="card indigo darken-1">
+            <div class="card-content white-text">
+                <span class="card-title"><i class="mdi-communication-email"></i> Notifications</span>
+                <p></p>
+            </div>
+            <div class="card-action center-align">
+                <a href="/settings/notifications">Configure</a>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<h3 class="col s12 light center header">{{project.name}}</h3>
+
+<div class="row">
+
+    <div class="col s12">
+        <ul class="tabs">
+            <li class="tab col s3"><a class="active" href="#current">Current {% if latestBuild %}#{{latestBuildDoc.sequence}}{% endif %}</a></li>
+            <li class="tab col s3"><a href="#branches">Branches</a></li>
+            <li class="tab col s3"><a href="#commits">Commits</a></li>
+            <li class="tab col s3"><a href="#builds">Builds</a></li>
+        </ul>
+    </div>
+    <div id="current" class="col s12" style="padding-top:10px;">
+
+        {% if latestBuild %}
+            {% include 'build.detail.html' with {'build':latestBuild} %}
+        {% else %}
+            <h3>No current build available</h3>
+        {% endif %}
+    </div>
+
+    <div id="branches" class="col s12" style="padding-top:10px;">
+        <div class="row">
+            {% for branchInfo in branches %}
+            <div class="col s6 m6 {% if branchInfo.watched %}deep-purple white-text{% else %}grey{% endif %} lighten-2">
+                <p>{{branchInfo.branch}} <small>{% if branchInfo.watched %}watched{% else %}not watched{% endif %}</small></p>
+            </div>
+            {% endfor %}
+        </div>
+
+    </div>
+    <div id="commits" class="col s12" style="padding-top:10px;">
+        <div class="row">
+            {% set currentRenderedBranch = '' %}
+            {% for branch,commitCollection in commits %}
+
+                {% if currentRenderedBranch != branch %}
+                    {% set currentRenderedBranch = branch %}
+                    <h4 class="col s12 light">{{branch}}</h4>
+                {% endif %}
+
+                {% for commit in commitCollection %}
+                <div class="col m12 {% if commit.built %}deep-purple white-text{% else %}grey{% endif %} lighten-2">
+                    <p>
+                        {{commit.description}}
+                        {% if commit.built %}<span style="float:right">#{{ commit.sequence }}</span>{% endif %}
+                    </p>
+                </div>
+                {% endfor %}
+
+            {% endfor %}
+        </div>
+    </div>
+    <div id="builds" class="col s12" style="padding-top:10px;">
+
+    </div>
+
+</div>
+{% endblock %}

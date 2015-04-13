@@ -1,0 +1,35 @@
+<h5>Latest builds</h5>
+{% for build in buildInformation %}
+
+    {% set statusColor = 'grey' %}
+
+    {% if build.status == "created" %}
+        {% set statusColor = 'grey' %}
+        {% set statusIcon = 'fa fa-clock-o' %}
+    {% endif %}
+
+    {% if build.status == "running" %}
+        {% set statusColor = 'yellow' %}
+        {% set statusIcon = 'fa fa-ellipsis-h' %}
+    {% endif %}
+
+    {% if build.status == "provisioning" %}
+        {% set statusColor = 'yellow' %}
+        {% set statusIcon = 'fa fa-ellipsis-h' %}
+    {% endif %}
+
+    {% if build.status == "finished" %}
+        {% set statusColor = 'blue' %}
+        {% set statusIcon = 'mdi-action-done' %}
+    {% endif %}
+
+    <div class="col s12 m12">
+        <div class="card-panel {{statusColor}}">
+            <span class="white-text">
+                <i class="{{statusIcon}}"></i>
+                {{build.project}}
+                <span class="right-align" style="float:right;">#{{build.sequence}}</span>
+            </span>
+        </div>
+    </div>
+{% endfor %}

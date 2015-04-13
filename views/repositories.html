@@ -1,0 +1,29 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+<h3 class="col s12 light center header">Repositories</h3>
+
+<div class="row">
+    {% for project in projects %}
+
+    <div class="col m12 deep-purple white-text lighten-2" style="margin-top:9px;">
+        <p>
+            {{project.name}}
+            <span style="float:right">
+
+                <span class="span-edit-action" style="margin-right:9px;">
+                    <i class="fa fa-pencil"></i>
+                </span>
+                <span class="span-delete-action">
+                    <i class="fa fa-remove"></i>
+                </span>
+
+            </span>
+        </p>
+    </div>
+
+    {% endfor %}
+</div>
+
+{% endblock %}
