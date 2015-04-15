@@ -29,19 +29,6 @@
 
                 {% if hasRunners %}
                     {% include '_runnerInformation.html' with {"runnersInformation":runnersInformation} %}
-                {% else %}
-                <div class="row">
-                  <div class="col s12 m12">
-                    <div class="card-panel deep-orange">
-                      <span class="white-text">
-                          <span>No Sailfish Runner have been added to Sailfish database.</span>
-                          <div class="row" style="margin-top:10px;">
-                            <a href="/add-runner" class="s12 waves-effect waves-light btn">Add runner</a>
-                        </div>
-                      </span>
-                    </div>
-                  </div>
-                </div>
                 {% endif %}
 
                 {% if hasProjects %}

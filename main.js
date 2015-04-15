@@ -13,7 +13,6 @@ var uuid = require("node-uuid");
 var rest = require('restler');
 
 //Controllers
-var addRunnerControllerFactory = require("sailfish/controller/add_runner");
 var dashboardControllerFactory = require("sailfish/controller/dashboard");
 var settingsControllerFactory = require("sailfish/controller/settings");
 var projectViewControllerFactory = require("sailfish/controller/project_view");
@@ -47,7 +46,6 @@ app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
 new settingsControllerFactory(app, sailfishCollector);
-new addRunnerControllerFactory(app, sailfishCollector);
 new dashboardControllerFactory(app, sailfishCollector);
 new projectViewControllerFactory(app, sailfishCollector);
 new projectBuildControllerFactory(app, sailfishCollector);
