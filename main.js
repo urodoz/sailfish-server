@@ -23,7 +23,13 @@ var hooksControllerFactory = require("sailfish/controller/hooks");
 var repositoriesControllerFactory = require("sailfish/controller/repositories");
 
 //Model injection
-require("sailfish/model/model")(app, configuration["mongo"]);
+var models = require("sailfish/model/model")(configuration["mongo"], app);
+
+//Managers
+var keyGenerator = require("sailfish/ssh/key_generator")(configuration["ssh"]["bits"]);
+var repositoryManager = require("sailfish/model/repository_manager")(models, keyGenerator);
+
+app.set("repository.manager", repositoryManager);
 
 //Static server and Template configuration
 app.use('/static', express.static('public'));
