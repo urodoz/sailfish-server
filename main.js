@@ -1,32 +1,32 @@
-var express = require('express');
-var app = express();
-var configuration = require("./configuration.js");
-var twig = require('twig');
-var _ = require("underscore");
-var mongoose = require('mongoose');
-var slug = require('slug');
-var collectorClass = require("sailfish/collector");
-var request = require("request");
-var fs = require("fs-extra");
-var async = require("async");
-var uuid = require("node-uuid");
-var rest = require('restler');
+var express = require('express'),
+    app = express(),
+    configuration = require("./configuration.js"),
+    twig = require('twig'),
+    _ = require("underscore"),
+    mongoose = require('mongoose'),
+    slug = require('slug'),
+    collectorClass = require("sailfish/collector"),
+    request = require("request"),
+    fs = require("fs-extra"),
+    async = require("async"),
+    uuid = require("node-uuid"),
+    rest = require('restler');
 
 //Controllers
-var dashboardControllerFactory = require("sailfish/controller/dashboard");
-var settingsControllerFactory = require("sailfish/controller/settings");
-var projectViewControllerFactory = require("sailfish/controller/project_view");
-var projectBuildControllerFactory = require("sailfish/controller/project_build");
-var addRepositoryControllerFactory = require("sailfish/controller/add_repository");
-var hooksControllerFactory = require("sailfish/controller/hooks");
-var repositoriesControllerFactory = require("sailfish/controller/repositories");
+var dashboardControllerFactory = require("sailfish/controller/dashboard"),
+    settingsControllerFactory = require("sailfish/controller/settings"),
+    projectViewControllerFactory = require("sailfish/controller/project_view"),
+    projectBuildControllerFactory = require("sailfish/controller/project_build"),
+    addRepositoryControllerFactory = require("sailfish/controller/add_repository"),
+    hooksControllerFactory = require("sailfish/controller/hooks"),
+    repositoriesControllerFactory = require("sailfish/controller/repositories");
 
 //Model injection
 var models = require("sailfish/model/model")(configuration["mongo"], app);
 
 //Managers
-var keyGenerator = require("sailfish/ssh/key_generator")(configuration["ssh"]["bits"]);
-var repositoryManager = require("sailfish/model/repository_manager")(models, keyGenerator);
+var keyGenerator = require("sailfish/ssh/key_generator")(configuration["ssh"]["bits"]),
+    repositoryManager = require("sailfish/model/repository_manager")(models, keyGenerator);
 
 app.set("repository.manager", repositoryManager);
 
@@ -35,6 +35,9 @@ app.use('/static', express.static('public'));
 app.set('views', './views');
 app.set('view engine', 'html');
 app.set("sailfish.configuration", configuration);
+
+//Init runner attached to app
+app.set("runners", []);
 
 var sailfishCollector = new collectorClass(app);
 
@@ -65,16 +68,6 @@ var server = app.listen(configuration["port"], function () {
 /*
  * Add socket IO (server already defined)
  */
-var io = require('socket.io')(server);
+var socketIOServer = require('sailfish/socket.io/server')(server, app);
 
-io.on('connection', function (socket) {
-    socket.on('runner-connected', function (data) {
 
-        //Emit handshade event
-        socket.emit("handshake", {
-            handshake: true,
-            source: "sailfish-ci-server"
-        });
-
-    });
-});

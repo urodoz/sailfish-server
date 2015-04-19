@@ -1,7 +1,7 @@
-var assert = require("assert");
-var keyGeneratorFactory = require("sailfish/ssh/key_generator");
-var _ = require("underscore");
-var S = require("string");
+var assert = require("assert"),
+    keyGeneratorFactory = require("sailfish/ssh/key_generator"),
+    _ = require("lodash"),
+    S = require("string");
 
 /**
  * @code

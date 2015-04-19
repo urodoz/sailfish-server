@@ -1,6 +1,6 @@
-var assert = require("assert");
-var gitManagerFactory = require("sailfish/git_manager");
-var _ = require("underscore");
+var assert = require("assert"),
+    gitManagerFactory = require("sailfish/git_manager"),
+    _ = require("lodash");
 
 /**
  * @code

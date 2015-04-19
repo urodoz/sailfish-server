@@ -1,6 +1,6 @@
 var assert = require("assert");
 var outputExtractorFactory = require("sailfish/output_extractor");
-var _ = require("underscore");
+var _ = require("lodash");
 
 /**
  * @code
