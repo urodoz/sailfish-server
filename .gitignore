@@ -7,3 +7,4 @@ npm-debug.log
 /start_mongo.sh
 
 configuration.js
+configuration_test.js

@@ -1,4 +1,4 @@
-var assert = require("assert"),
+var assert = require("chai").assert,
     keyGeneratorFactory = require("sailfish/ssh/key_generator"),
     _ = require("lodash"),
     S = require("string");
@@ -10,24 +10,25 @@ var assert = require("assert"),
  */
 describe("ssh key_generator", function() {
 
-    this.timeout(3000);
+    this.timeout(4500);
 
     it('simple check of the keypair generated', function(done) {
         var keyGenerator = new keyGeneratorFactory(1024);
-        var keyPair = keyGenerator.generate();
+        keyGenerator.generate(function(keyPair) {
 
-        assert.ok(_.has(keyPair, "public"));
-        assert.ok(_.has(keyPair, "private"));
-        assert.ok(_.isString(keyPair["public"]));
-        assert.ok(_.isString(keyPair["private"]));
+            assert.ok(_.has(keyPair, "public"));
+            assert.ok(_.has(keyPair, "private"));
+            assert.ok(_.isString(keyPair["public"]));
+            assert.ok(_.isString(keyPair["private"]));
+            assert.ok(!_.isEmpty(keyPair["public"]));
 
-        //String content assertions
-        assert.ok(S(keyPair["public"]).startsWith("-----BEGIN RSA PUBLIC KEY-----"));
-        assert.ok(S(keyPair["private"]).startsWith("-----BEGIN RSA PRIVATE KEY-----"));
-        assert.ok(S(keyPair["public"]).contains('-----END RSA PUBLIC KEY-----'));
-        assert.ok(S(keyPair["private"]).contains('-----END RSA PRIVATE KEY-----'));
+            //String content assertions
+            assert.ok(S(keyPair["private"]).startsWith("-----BEGIN RSA PRIVATE KEY-----"));
+            assert.ok(S(keyPair["private"]).contains('-----END RSA PRIVATE KEY-----'));
 
-        done();
+            done();
+
+        });
     });
 
 });
