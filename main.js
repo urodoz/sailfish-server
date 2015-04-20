@@ -27,10 +27,12 @@ var models = require("sailfish/model/model")(configuration["mongo"], app);
 //Managers
 var keyGenerator = require("sailfish/ssh/key_generator")(configuration["ssh"]["bits"]),
     buildManager = require("sailfish/model/build_manager")(models),
+    runnerManager = require("sailfish/runner_manager")(app),
     repositoryManager = require("sailfish/model/repository_manager")(models, keyGenerator);
 
 app.set("repository.manager", repositoryManager);
 app.set("build.manager", buildManager);
+app.set("runner.manager", runnerManager);
 
 //Static server and Template configuration
 app.use('/static', express.static('public'));
@@ -71,4 +73,5 @@ var server = app.listen(configuration["port"], function () {
  */
 var socketIOServer = require('sailfish/socket.io/server')(server, app);
 app.set("io.server", socketIOServer);
+app.set("io.sockets", socketIOServer.io.sockets);
 

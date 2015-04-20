@@ -1,71 +1,75 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
         <title>Sailfish CI Server</title>
 
-        <link rel="stylesheet" type="text/css" href="/static/bower_components/materialize/dist/css/materialize.min.css">
-        <link rel="stylesheet" type="text/css" href="/static/css/sailfish.css">
-        <link rel="stylesheet" href="/static/bower_components/font-awesome/css/font-awesome.min.css">
-        <link href='http://fonts.googleapis.com/css?family=Ubuntu+Mono' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" type="text/css" href="/static/bower_components/foundation/css/foundation.css">
+
+        <script src="/static/bower_components/modernizr/modernizr.js"></script>
+        <script type="text/javascript">
+            SAILFISH_SERVER = "{{sailfishHost}}";
+        </script>
+
     </head>
     <body>
 
         <!-- Navbar -->
-        <nav>
-            <div class="nav-wrapper">
-                <a href="/" class="brand-logo" style="padding-left:10px;">Sailfish CI Server</a>
-                <ul id="nav-mobile" class="right hide-on-med-and-down">
-                    <li {% if view == 'dashboard' %}class="active"{% endif %}><a href="/">Dashboard</a></li>
-                    <li {% if view == 'settings' %}class="active"{% endif %}><a href="/settings">Settings</a></li>
+        <div class="contain-to-grid sticky">
+            <nav class="top-bar" data-topbar role="navigation">
+
+                <ul class="title-area">
+                    <li class="name">
+                        <h1><a href="#">Sailfish CI Server</a></h1>
+                    </li>
                 </ul>
-            </div>
-        </nav>
+
+                <section class="top-bar-section">
+                    <ul class="right">
+                        <li {% if view == 'dashboard' %}class="active"{% endif %}><a href="/">Dashboard</a></li>
+                        <li {% if view == 'settings' %}class="active"{% endif %}><a href="/settings">Settings</a></li>
+                    </ul>
+                </section>
+            </nav>
+        </div>
+
 
         <!-- Page Layout -->
-        <div class="row" style="min-height:900px;margin-top:20px;">
+        <div class="row" style="padding-top:20px;">
 
-            <div class="sailfish-sidebar col s3">
+            <div class="large-3 columns">
 
-                {% if hasRunners %}
-                    {% include '_runnerInformation.html' with {"runnersInformation":runnersInformation} %}
-                {% endif %}
+                <ul class="stack button-group" id="runnerContainer">
+                    <!--<li><a href="#" class="button disabled">{{runner.name}}</a></li>-->
+                </ul>
 
                 {% if hasProjects %}
                     {% include '_projectsInformation.html' with {"projectsInformation":projectsInformation} %}
-                {% else %}
-                <div class="row">
-                  <div class="col s12 m12">
-                    <div class="card-panel deep-purple">
-                      <span class="white-text">
-                          <span>No repository have been added to Sailfish database. Cannot display any
-                          build information.</span>
-                          <div class="row" style="margin-top:10px;">
-                            <a href="/add-repository" class="s12 waves-effect waves-light btn">Add repository</a>
-                        </div>
-                      </span>
-                    </div>
-                  </div>
-                </div>
                 {% endif %}
 
                 {% if hasBuilds %}
                     {% include '_buildsInformation.html' with {"buildInformation":buildInformation} %}
                 {% endif %}
 
-
-
             </div>
 
-            <div class="sailfish-main col s9">
+            <div class="sailfish-main large-9 columns">
                 {% block content %}{% endblock %}
             </div>
 
         </div>
 
         <!-- JS -->
+        <script src="/static/bower_components/lodash/lodash.min.js"></script>
         <script src="/static/bower_components/jquery/dist/jquery.min.js"></script>
-        <script src="/static/bower_components/underscore/underscore-min.js"></script>
-        <script src="/static/bower_components/materialize/dist/js/materialize.min.js"></script>
+        <script src="/static/bower_components/foundation/js/foundation.min.js"></script>
+        <script>
+            $(document).foundation();
+        </script>
+        <!-- SOCKET IO -->
+        <script src="{{sailfishHost}}/socket.io/socket.io.js"></script>
+        <script src="/static/js/socket.client.js"></script>
     </body>
 </html>
