@@ -7,6 +7,10 @@
 * [NodeJS](https://nodejs.org/) >= 0.10.36
 * [PM2](https://github.com/Unitech/PM2)
 
+### Development dependencies
+
+* JSHint
+
 ## Installation
 
 Install the NPM dependencies:
