@@ -11,8 +11,8 @@ var express = require('express'),
     async = require("async"),
     uuid = require("node-uuid"),
     bodyParser = require('body-parser'),
-    rest = require('restler');
-    //Controllers
+    rest = require('restler'),
+    winston = require('winston'),
     dashboardControllerFactory = require("sailfish/controller/dashboard"),
     settingsControllerFactory = require("sailfish/controller/settings"),
     projectViewControllerFactory = require("sailfish/controller/project_view"),
@@ -30,6 +30,14 @@ var keyGenerator = require("sailfish/ssh/key_generator")(configuration["ssh"]["b
     runnerManager = require("sailfish/runner_manager")(app),
     repositoryManager = require("sailfish/model/repository_manager")(models, keyGenerator);
 
+//Logger configuration
+winston.remove(winston.transports.Console);
+winston.add(winston.transports.Console, {
+    colorize: true,
+    timestamp: true
+})
+
+app.set("logger", winston);
 app.set("repository.manager", repositoryManager);
 app.set("build.manager", buildManager);
 app.set("runner.manager", runnerManager);
@@ -61,11 +69,10 @@ new repositoriesControllerFactory(app, sailfishCollector);
 
 var server = app.listen(configuration["port"], function () {
 
-  var host = server.address().address;
-  var port = server.address().port;
+    var host = server.address().address;
+    var port = server.address().port;
 
-  console.log('App listening at http://%s:%s', host, port);
-
+    winston.info('App listening', {host: host, port: port});
 });
 
 /*

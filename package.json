@@ -24,7 +24,8 @@
     "ssh-keygen": "^0.2.1",
     "string": "^3.1.1",
     "twig": "^0.8.2",
-    "wildcard": "^1.1.0"
+    "wildcard": "^1.1.0",
+    "winston": "^1.0.0"
   },
   "devDependencies": {
     "chai": "^2.2.0",
